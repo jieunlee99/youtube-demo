@@ -55,13 +55,10 @@ router
   .delete(function (req, res) {
     let { email } = req.body;
 
-    conn.query(
-      `DELETE FROM users WHERE email = ?`,
-      email,
-      function (err, results) {
-        res.status(200).json(results);
-      }
-    );
+    let sql = `DELETE FROM users WHERE email = ?`;
+    conn.query(sql, email, function (err, results) {
+      res.status(200).json(results);
+    });
   });
 
 module.exports = router;
