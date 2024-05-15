@@ -50,17 +50,22 @@ router.post(
             email: loginUser.email,
             name: loginUser.name,
           },
-          process.env.PRIVATE_KEY
+          process.env.PRIVATE_KEY,
+          {
+            expiresIn: "30m", // m(분), h(시)
+            issuer: "songa",
+          }
         );
 
-        // res.cookie();
+        res.cookie("token", token, {
+          httpOnly: true,
+        });
 
         res.status(200).json({
           message: `${loginUser.name}님 로그인 되었습니다.`,
-          token: token,
         });
       } else {
-        res.status(404).json({
+        res.status(403).json({
           message: `이메일 또는 비밀번호가 틀렸습니다.`,
         });
       }
